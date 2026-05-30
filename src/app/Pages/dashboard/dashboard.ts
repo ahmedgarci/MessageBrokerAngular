@@ -1,0 +1,13 @@
+import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+@Component({
+  standalone:true,
+  selector: 'app-dashboard',
+  imports: [RouterModule],
+  templateUrl: './dashboard.html',
+  styleUrl: './dashboard.css',
+})
+export class DashboardComponent {
+  constructor (){}
+}

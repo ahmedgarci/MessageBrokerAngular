@@ -1,0 +1,56 @@
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow">
+
+  <h1 class="text-2xl font-bold mb-6">Publish Message</h1>
+
+  <form [formGroup]="publishForm" (ngSubmit)="onSubmit()">
+
+    <div>
+      <label class="block text-sm font-medium">Exchange</label>
+      <app-exchange-select-component (exchangeNameEvent)="onExchangeSelected($event)"></app-exchange-select-component>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium">Routing Key</label>
+      <input
+        formControlName="routingKey"
+        class="w-full p-2 border rounded"
+        placeholder="routing key"
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium">Message Type</label>
+      <select formControlName="messageType" class="w-full p-2 border rounded">
+        <option value="JSON">JSON</option>
+        <option value="TEXT">TEXT</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium">Payload</label>
+      <textarea
+        formControlName="payload"
+        class="w-full p-2 border rounded h-32"
+        placeholder="message content"
+      ></textarea>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium">Delay (seconds)</label>
+      <input
+        type="number"
+        formControlName="delay"
+        class="w-full p-2 border rounded"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="w-full bg-slate-900 text-white p-2 rounded hover:bg-slate-800"
+    >
+      Publish
+    </button>
+
+  </form>
+
+</div>

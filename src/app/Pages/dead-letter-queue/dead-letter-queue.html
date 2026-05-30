@@ -1,0 +1,31 @@
+<div class="space-y-4">
+
+  <h1 class="text-2xl font-bold">Dead Letter Queue</h1>
+
+  <div class="bg-white rounded-xl shadow overflow-hidden">
+
+    <table class="w-full text-sm">
+
+      <tr class="bg-gray-100">
+        <th class="p-3">ID</th>
+        <th class="p-3">Queue</th>
+        <th class="p-3">Reason</th>
+        <th class="p-3">Action</th>
+      </tr>
+
+      <tr *ngFor="let m of dlqMessages" class="border-t">
+        <td class="p-3">{{ m.id }}</td>
+        <td class="p-3">{{ m.queue }}</td>
+        <td class="p-3 text-red-500">{{ m.reason }}</td>
+        <td class="p-3">
+          <button class="px-3 py-1 bg-green-600 text-white rounded">
+            Retry
+          </button>
+        </td>
+      </tr>
+
+    </table>
+
+  </div>
+
+</div>

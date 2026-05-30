@@ -1,0 +1,14 @@
+<select
+  class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-slate-700"
+  (change)="onExchangeSelect($event)">
+
+  >
+
+  <option *ngFor="let exchange of exchanges"
+          [value]="exchange.name"
+
+          >
+    {{ exchange.name }}
+  </option>
+
+</select>

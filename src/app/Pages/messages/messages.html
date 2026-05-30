@@ -1,0 +1,270 @@
+
+<div class="min-h-screen bg-gray-100 p-4">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+
+    <div>
+      <h1 class="text-3xl font-bold text-slate-800">
+        Messages
+      </h1>
+
+      <p class="text-gray-500 mt-1">
+        Monitor broker traffic and message lifecycle
+      </p>
+    </div>
+
+    <button
+      class="mt-4 md:mt-0 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2 rounded-xl shadow transition">
+      Refresh
+    </button>
+
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 mb-6">
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+      <div>
+
+        <label class="block text-sm font-medium text-gray-600 mb-2">
+          Queue
+        </label>
+
+        <select
+          class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-slate-700">
+
+          <option>All Queues</option>
+          <option>orders</option>
+          <option>payments</option>
+          <option>emails</option>
+
+        </select>
+
+      </div>
+
+      <div>
+
+        <label class="block text-sm font-medium text-gray-600 mb-2">
+          Status
+        </label>
+
+        <select
+          class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-slate-700">
+
+          <option>All Status</option>
+          <option>READY</option>
+          <option>PROCESSING</option>
+          <option>ACKED</option>
+          <option>FAILED</option>
+
+        </select>
+
+      </div>
+
+      <div>
+
+        <label class="block text-sm font-medium text-gray-600 mb-2">
+          Message Type
+        </label>
+
+        <select
+          class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-slate-700">
+
+          <option>All Types</option>
+          <option>JSON</option>
+          <option>TEXT</option>
+
+        </select>
+
+      </div>
+
+      <!-- SEARCH -->
+      <div>
+
+        <label class="block text-sm font-medium text-gray-600 mb-2">
+          Search
+        </label>
+
+        <input
+          type="text"
+          placeholder="Search by ID..."
+          class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-slate-700">
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- TABLE CARD -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+
+    <!-- TABLE HEADER -->
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+
+      <div>
+        <h2 class="text-lg font-semibold text-slate-800">
+          Message Traffic
+        </h2>
+
+        <p class="text-sm text-gray-500">
+          Latest broker events and queue activity
+        </p>
+      </div>
+
+      <div class="text-sm text-gray-500">
+        Total: {{ messages.length }}
+      </div>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="overflow-x-auto">
+
+      <table class="w-full">
+
+        <!-- HEAD -->
+        <thead class="bg-gray-50">
+
+          <tr class="text-left text-sm text-gray-600">
+
+            <th class="px-6 py-4 font-semibold">Message ID</th>
+
+            <th class="px-6 py-4 font-semibold">Queue</th>
+
+            <th class="px-6 py-4 font-semibold">Status</th>
+
+            <th class="px-6 py-4 font-semibold">Type</th>
+
+            <th class="px-6 py-4 font-semibold">Retries</th>
+
+            <th class="px-6 py-4 font-semibold">Created</th>
+
+            <th class="px-6 py-4 font-semibold">Actions</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="let message of messages"
+            class="border-t border-gray-100 hover:bg-gray-50 transition">
+
+            <!-- ID -->
+            <td class="px-6 py-4">
+
+              <div class="font-medium text-slate-800">
+                {{ message.message_id.substring(0,8) }}
+              </div>
+
+            </td>
+
+            <!-- QUEUE -->
+            <td class="px-6 py-4">
+
+              <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-medium">
+                {{ message.queue }}
+              </span>
+
+            </td>
+
+            <!-- STATUS -->
+            <td class="px-6 py-4">
+
+              <span
+                class="px-3 py-1 rounded-full text-xs font-semibold"
+                >
+
+                {{ message.status }}
+
+              </span>
+
+            </td>
+
+            <!-- TYPE -->
+            <td class="px-6 py-4 text-gray-600">
+
+              type
+            </td>
+
+            <!-- RETRY -->
+            <td class="px-6 py-4">
+
+              <span class="font-medium text-slate-700">
+                {{ message.retries || 0 }}
+              </span>
+
+            </td>
+
+            <!-- CREATED -->
+            <td class="px-6 py-4 text-gray-500 text-sm">
+
+              {{ message.created_at }}
+
+            </td>
+
+            <!-- ACTIONS -->
+            <td class="px-6 py-4">
+
+              <div class="flex gap-2">
+
+                <button
+                  class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg text-sm transition">
+                  View
+                </button>
+
+                <button
+                  class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition">
+                  Retry
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between bg-gray-50">
+
+      <div class="text-sm text-gray-500">
+        Showing latest messages
+      </div>
+
+      <!-- PAGINATION -->
+      <div class="flex gap-2">
+
+        <button
+          class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+          Previous
+        </button>
+
+        <button
+          class="px-4 py-2 bg-slate-900 text-white rounded-lg">
+          1
+        </button>
+
+        <button
+          class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+          2
+        </button>
+
+        <button
+          class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+          Next
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
