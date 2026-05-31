@@ -28,13 +28,67 @@
   </div>
 
   <div class="bg-white rounded-xl shadow p-4">
-    <h2 class="font-semibold mb-3">Live Events</h2>
+    <h2 class="font-semibold mb-4">Live Events</h2>
 
-    <div class="space-y-2 text-sm">
+    <div class="space-y-3 max-h-[400px] overflow-auto">
 
-      <div class="text-green-600">✔ Message published to orders</div>
-      <div class="text-blue-600">✔ Message consumed</div>
-      <div class="text-red-600">✔ Message moved to DLQ</div>
+      <div
+        *ngFor="let message of messages"
+        class="border rounded-lg p-3 hover:shadow transition bg-gray-50"
+      >
+
+        <!-- HEADER -->
+        <div class="flex justify-between items-center mb-2">
+
+          <div class="font-semibold text-gray-800">
+            {{ message.queue?.name }}
+          </div>
+
+          <span
+            class="px-2 py-1 text-xs rounded-full font-medium"
+            [ngClass]="{
+              'bg-yellow-100 text-yellow-700': message.status === 'READY',
+              'bg-blue-100 text-blue-700': message.status === 'PROCESSING',
+              'bg-green-100 text-green-700': message.status === 'ACKED',
+              'bg-red-100 text-red-700': message.status === 'FAILED'
+            }"
+          >
+            {{ message.status }}
+          </span>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="text-sm text-gray-600 space-y-1">
+
+          <div>
+            <span class="font-medium">ID:</span>
+            {{ message.id?.substring(0, 8) }}
+          </div>
+
+          <div>
+            <span class="font-medium">Type:</span>
+            {{ message.type }}
+          </div>
+
+          <div>
+            <span class="font-medium">Retries:</span>
+            {{ message.retryCount ?? 0 }}
+          </div>
+
+          <div>
+            <span class="font-medium">Created:</span>
+            {{ message.created_at | date:'short' }}
+          </div>
+
+        </div>
+
+        <div class="mt-2 text-xs bg-gray-100 p-2 rounded overflow-hidden text-ellipsis">
+          <span class="font-medium">Payload:</span>
+          {{ message.payload | slice:0:60 }}...
+        </div>
+
+      </div>
 
     </div>
   </div>

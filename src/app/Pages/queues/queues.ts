@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FetchService } from '../../Services/Queues/queue';
 import { Queue } from '../../Models/QueueModel';
 
@@ -14,7 +14,7 @@ export class QueuesComponent  implements OnInit{
   queues:any = [];
 
 
-  constructor(private fetchService: FetchService<Queue>) {}
+  constructor(private fetchService: FetchService<Queue>,private cdr:ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadQueues();
@@ -23,8 +23,8 @@ export class QueuesComponent  implements OnInit{
   loadQueues(): void {
     this.fetchService.fetch("queue").subscribe({
       next: (data) => {
-        console.log(data)
         this.queues = data;
+        this.cdr.detectChanges()
       },
       error: (err) => {
         console.error('Error loading queues:', err);

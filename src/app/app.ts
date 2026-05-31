@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { WebsocketService } from './Services/Websocketes/websocket-service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,21 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit,OnDestroy{
+
   protected readonly title = signal('BrokerAppUi');
+
+  constructor(private websocketService:WebsocketService){}
+
+
+  ngOnDestroy(): void {
+    this.websocketService.disconnect();
+
+  }
+
+  ngOnInit(): void {
+    this.websocketService.init();
+
+  }
+
 }

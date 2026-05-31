@@ -16,7 +16,11 @@ import { CreateExchangeComp } from '../../Components/create-exchange-comp/create
 export class ExchangesComponent implements OnInit{
 
   exchanges:Exchange[]=[];
+  fanoutCnt=0;
+  directCnt=0;
   constructor(private fetchService:FetchService<Exchange>,private cdr:ChangeDetectorRef,private dialog:MatDialog){}
+
+
 
   open(){
     this.dialog.open(CreateExchangeComp,{
@@ -39,10 +43,12 @@ export class ExchangesComponent implements OnInit{
     this.fetchService.fetch("exchange").subscribe(
       (data)=>{
         console.log(data);
-        this.exchanges = data.map((e) => ({
+        this.exchanges = data.map((e) => (
+          {
           ...e,
           createdAt: format(e.createdAt,"yyyy-MM-dd HH:mm")
         }));
+        this.updateCounts();
         this.cdr.detectChanges();
       },
       (error)=>{
@@ -51,6 +57,14 @@ export class ExchangesComponent implements OnInit{
     )
   }
 
+  private updateCounts() {
+    this.fanoutCnt = this.exchanges.filter(
+      e => e.type === 'FANOUT'
+    ).length;
 
+    this.directCnt = this.exchanges.filter(
+      e => e.type === 'DIRECT'
+    ).length;
+  }
 
 }
