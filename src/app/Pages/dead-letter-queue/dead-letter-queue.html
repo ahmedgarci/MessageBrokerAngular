@@ -1,31 +1,41 @@
 <div class="space-y-4">
-
   <h1 class="text-2xl font-bold">Dead Letter Queue</h1>
 
-  <div class="bg-white rounded-xl shadow overflow-hidden">
+  @if (isLoading) {
+    <app-loader-component />
+  } @else if (dlqMessages.length === 0) {
+    <div class="p-8 text-center text-gray-500">
+      No messages found in the Dead Letter Queue.
+    </div>
+  } @else {
+    <div class="bg-white rounded-xl shadow overflow-hidden">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="p-3">ID</th>
+            <th class="p-3">Queue</th>
+            <th class="p-3">Retry Count</th>
+            <th class="p-3">Action</th>
+          </tr>
+        </thead>
 
-    <table class="w-full text-sm">
-
-      <tr class="bg-gray-100">
-        <th class="p-3">ID</th>
-        <th class="p-3">Queue</th>
-        <th class="p-3">Reason</th>
-        <th class="p-3">Action</th>
-      </tr>
-
-      <tr *ngFor="let m of dlqMessages" class="border-t">
-        <td class="p-3">{{ m.id }}</td>
-        <td class="p-3">{{ m.queue }}</td>
-        <td class="p-3 text-red-500">{{ m.reason }}</td>
-        <td class="p-3">
-          <button class="px-3 py-1 bg-green-600 text-white rounded">
-            Retry
-          </button>
-        </td>
-      </tr>
-
-    </table>
-
-  </div>
-
+        <tbody>
+          @for (m of dlqMessages; track m.message_id) {
+            <tr class="border-t text-center">
+              <td class="p-3">{{ m.message_id }}</td>
+              <td class="p-3">{{ m.queue }}</td>
+              <td class="p-3 text-red-500">{{ m.retries || 0 }}</td>
+              <td class="p-3">
+                <button
+                  class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
+                >
+                  Retry
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </div>

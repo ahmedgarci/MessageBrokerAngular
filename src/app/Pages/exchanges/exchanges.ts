@@ -4,7 +4,7 @@ import { FetchService } from '../../Services/Queues/queue';
 import { Exchange } from '../../Models/ExchangeModel';
 import { format } from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateExchangeComp } from '../../Components/create-exchange-comp/create-exchange-comp';
+import { CreateExchangeComp } from '../../Components/exchange/create-exchange-comp/create-exchange-comp';
 
 @Component({
   standalone:true,

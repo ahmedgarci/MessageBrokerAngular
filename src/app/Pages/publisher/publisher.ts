@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ExchangeSelectComponent } from '../../Components/exchange-select-component/exchange-select-component';
+import { ExchangeSelectComponent } from '../../Components/exchange/exchange-select-component/exchange-select-component';
 
 @Component({
   standalone:true,

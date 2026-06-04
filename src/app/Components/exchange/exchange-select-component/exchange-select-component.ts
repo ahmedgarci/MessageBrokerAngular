@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FetchService } from '../../Services/Queues/queue';
-import { ExchangeSelect } from '../../Models/ExchangeModel';
+import { FetchService } from '../../../Services/Queues/queue';
+import { ExchangeSelect } from '../../../Models/ExchangeModel';
 import { CommonModule } from '@angular/common';
 
 @Component({

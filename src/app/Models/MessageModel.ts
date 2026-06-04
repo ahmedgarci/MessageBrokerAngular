@@ -6,3 +6,16 @@ export interface Message{
   created_at:string,
   type:string
 }
+
+
+export interface DlqMessage{
+  message_id:string,
+  queue:string,
+  retries:number,
+}
+
+export interface MessageHistory{
+  state:string;
+  details:string;
+  time:string;
+}
